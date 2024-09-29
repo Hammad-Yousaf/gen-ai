@@ -41,7 +41,7 @@ def extractive_summarize(text, num_sentences=3):
     return summary
 
 def abstractive_summarize(text, max_length=130, min_length=30):
-    summarizer = pipeline("summarization")
+    summarizer=  pipeline("summarization", model="facebook/bart-large-cnn")
     summary = summarizer(text, max_length=max_length, min_length=min_length, do_sample=False)
     return summary[0]['summary_text']
 

@@ -1,7 +1,7 @@
+
 import streamlit as st
 from main import save_scraped_data, generate_text
 
-# URL list remains the same
 urls = [
     'https://www.gutenberg.org/files/84/84-0.txt',
     'https://www.gutenberg.org/files/11/11-0.txt',
@@ -28,7 +28,64 @@ urls = [
     'https://www.bloomberg.com',
     'https://www.wsj.com',
 ]
+# Apply custom CSS for styling
+st.markdown(
+    """
+    <style>
+    /* Background color for the Streamlit app container */
+    .stApp {
+        background-color: #1C1C1E; /* Charcoal Black */
+    }
 
+    /* Set st.write text color to white */
+    .stMarkdown p {
+        color: #FFFFFF; /* Pure White */
+    }
+
+    /* Header styling - Electric Blue */
+    h1, h2, h3, h4, h5, h6 {
+        color: #00A8E8; /* Electric Blue */
+    }
+
+    /* General text input styling */
+    .stTextInput > label {
+        color: #FFFFFF; /* Pure White for input labels */
+    }
+    .stTextInput input {
+        background-color: #2A2A2E; /* Slightly lighter Charcoal */
+        color: #FFFFFF; /* Pure White text inside input */
+        border-radius: 8px;
+        border: 1px solid #00A8E8; /* Electric Blue borders */
+    }
+
+    /* Slider styling - both labels and sliders in white */
+    .stSlider .st-c6 {
+        color: #FFFFFF; /* Pure White for slider labels */
+    }
+    .stSlider .st-d0 {
+        color: #FFFFFF; /* Pure White for slider values */
+    }
+
+    /* Radio button styling */
+    .stRadio > label {
+        color: #FFFFFF; /* Pure White */
+    }
+
+    /* Button styling */
+    button {
+        background-color: #FF4C60; /* Vivid Pink */
+        color: white;
+        border-radius: 8px;
+        border: 2px solid #00A8E8; /* Electric Blue border */
+    }
+    button:hover {
+        background-color: #FF7584; /* Slightly lighter Pink on hover */
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 st.title("AI Text Generator")
 st.write("This app scrapes text data from the web, fine-tunes a GPT-2 model, and generates text based on user input.")
 
@@ -52,7 +109,6 @@ if st.button("Generate Text"):
             st.write("Generated Text:")
             st.text_area("", generated_text)
 
-            # Feedback and logging
             try:
                 with open('feedback_log.txt', 'a') as f:
                     f.write(f"Generated Text: {generated_text}\n")
@@ -63,7 +119,7 @@ if st.button("Generate Text"):
         except Exception as e:
             st.error(f"Text generation failed: {e}")
 
-# Feedback section
+
 st.header("Feedback")
 feedback = st.radio("How do you feel about the generated text?", ('Good', 'Bad', 'Neutral'))
 feedback_comment = st.text_area("Any specific comments or suggestions?")
